@@ -29,11 +29,33 @@ def predict(STG,SCG,STR,LPR,PEG,algorithm):
             return f"DBSCAN: Cluster {labels[-1]}"
     else:
         return "Unknown algorithm"
-interface=gr.Interface(fn=predict,inputs=[gr.Number(label="STG"),
-    gr.Number(label="SCG"),
-    gr.Number(label="STR"),
-    gr.Number(label="LPR"),
-    gr.Number(label="PEG"),
-    gr.Dropdown(choices=["KMeans","Hierarchical","DBSCAN"],label="Select Algorithm")],
-    outputs="text",title="Clustering",
-    description="Enter values for STG, SCG, STR, LPR, PEG and choose a clustering algorithm").launch(auth=("sanjay","1234"),share=True)
+USERNAME="sanjay"
+PASSWORD="1234"
+def check_login(username,password):
+    if username==USERNAME and password==PASSWORD:
+        return gr.update(visible=False),gr.update(visible=True),"✅ Login successful!"
+    else:
+        return gr.update(visible=True),gr.update(visible=False),"❌ Invalid credentials"
+with gr.Blocks() as demo:
+    with gr.Row(visible=True) as login_page:
+        gr.Markdown("## 🔑 Login Page")
+        user=gr.Textbox(label="Username")
+        pwd=gr.Textbox(label="Password",type="password")
+        login_btn=gr.Button("Login")
+        login_status=gr.Label()
+    with gr.Row(visible=False) as app_page:
+        interface=gr.Interface(fn=predict,
+            inputs=[gr.Number(label="STG"),
+                gr.Number(label="SCG"),
+                gr.Number(label="STR"),
+                gr.Number(label="LPR"),
+                gr.Number(label="PEG"),
+                gr.Dropdown(choices=["KMeans","Hierarchical","DBSCAN"],label="Select Algorithm")],
+            outputs="text",
+            title="Clustering",
+            description="Enter values for STG, SCG, STR, LPR, PEG and choose a clustering algorithm",
+            live=False)
+        interface.render()
+    login_btn.click(fn=check_login,inputs=[user,pwd],outputs=[login_page,app_page,login_status])
+if __name__=="__main__":
+    demo.launch()
