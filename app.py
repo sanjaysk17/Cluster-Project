@@ -36,4 +36,4 @@ interface=gr.Interface(fn=predict,inputs=[gr.Number(label="STG"),
     gr.Number(label="PEG"),
     gr.Dropdown(choices=["KMeans","Hierarchical","DBSCAN"],label="Select Algorithm")],
     outputs="text",title="Clustering",
-    description="Enter values for STG, SCG, STR, LPR, PEG and choose a clustering algorithm").launch(auth=("sanjay","1234"))
+    description="Enter values for STG, SCG, STR, LPR, PEG and choose a clustering algorithm").launch(auth=("sanjay","1234"),share=True)
