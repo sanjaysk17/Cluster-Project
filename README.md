@@ -1,5 +1,6 @@
 # 🧩 Clustering Student Synthetic Data
 🌀 Clustering App with Gradio
+Link:https://huggingface.co/spaces/Sanjaysk17/clustering_
 
 An interactive Clustering Web Application built using Python, Scikit-learn, Plotly, and Gradio.
 
